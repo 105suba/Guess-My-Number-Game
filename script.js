@@ -17,8 +17,9 @@ document.querySelector(".check").addEventListener("click", function () {
   if (!guess) displaymessage("No Number");
   //correct number
   else if (guess === secretnumber) {
-    displaymessage("Correct Number..!");
+    displaymessage("🎉 Correct Number..!");
     document.querySelector(".main-section").style.backgroundColor = "#60b347";
+    document.querySelector(".number").style.width = "20rem";
     document.querySelector(".number").textContent = guess;
     if (score > highscore) {
       highscore = score;
@@ -28,15 +29,30 @@ document.querySelector(".check").addEventListener("click", function () {
 
   //not corrent number
   else if (guess !== secretnumber) {
+    //score not equal to 0
     if (score > 1) {
-      if (guess - secretnumber === 1) displaymessage("Almost near...!");
-      else if (guess - secretnumber === 2)
-        displaymessage(guess > secretnumber ? "Bit high..." : "Bit low...");
-      else displaymessage(guess > secretnumber ? "Too high..." : "Too low...");
+      console.log(guess - secretnumber);
+      if (guess - secretnumber === 1) {
+        displaymessage("😃 Almost near...!");
+        document.querySelector(".main-section").style.backgroundColor =
+          "#adb5bd";
+      } else if (guess - secretnumber === 2 || guess - secretnumber === 3) {
+        displaymessage(
+          guess > secretnumber ? "🤏 Little high..." : "🤏 Little low..."
+        );
+        document.querySelector(".main-section").style.backgroundColor =
+          "#868e96";
+      } else {
+        document.querySelector(".main-section").style.backgroundColor =
+          "#343a40";
+        displaymessage(
+          guess > secretnumber ? "📈 Too high..." : "📉 Too low..."
+        );
+      }
       score--;
       document.querySelector(".score").textContent = score;
     } else {
-      displaymessage("You lost the game..!");
+      displaymessage("💥 You lost the game..!");
       document.querySelector(".score").textContent = 0;
     }
   }
@@ -47,7 +63,10 @@ document.querySelector(".again").addEventListener("click", function () {
   const secretnumber = Math.trunc(Math.random() * 20 + 1);
   document.querySelector(".score").textContent = score;
   displaymessage("Start guessing...");
-  document.querySelector(".main-section").style.backgroundColor = "#443a3a";
+  document.querySelector(".main-section").style.backgroundColor = "#343a40";
+  document.querySelector(".number").textContent = "?";
+  document.querySelector(".number").style.width = "15rem";
+  document.querySelector(".guess").value = "";
 });
 
 const numberField = document.querySelector(".guess");
